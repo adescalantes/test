@@ -1,8 +1,9 @@
 package com.trainee.services;
 
-import java.util.ArrayList;
 import java.util.List;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -22,15 +23,16 @@ public class ParentService {
 
   @Autowired
   private ParentRepository parentRepository;
+  private static final Logger log = LoggerFactory.getLogger(FamilyService.class);
 
   /**
    * Método para obtener todos los Parents
    * 
    * @return Todos los Parents
    */
-  
-  
+
   public List<Parent> getAll() {
+    log.info("Getting All FamilyMembers");
     return parentRepository.findAll();
   }
 
@@ -41,11 +43,13 @@ public class ParentService {
    * @return Manejo de HttpStatus según sea el caso
    */
   public ResponseEntity<Parent> postParent(Parent parent) {
-	  
+
     if (parentRepository.findById(parent.getId()) == null) {
+      log.info("A new Parent was created");
       parentRepository.save(parent);
       return new ResponseEntity<Parent>(HttpStatus.CREATED);
     } else {
+      log.debug("Can't create a new Parent");
       return new ResponseEntity<Parent>(HttpStatus.BAD_REQUEST);
     }
 
@@ -60,9 +64,11 @@ public class ParentService {
    */
   public ResponseEntity<Parent> putParent(Parent parent) {
     if (parentRepository.findById(parent.getId()) != null) {
+      log.info("Parent was updated");
       parentRepository.save(parent);
       return new ResponseEntity<Parent>(HttpStatus.ACCEPTED);
     } else {
+      log.debug("Can't update Parent");
       return new ResponseEntity<Parent>(HttpStatus.NOT_FOUND);
     }
 
@@ -74,6 +80,7 @@ public class ParentService {
    * @param id Id de Parent
    */
   public void deleteParent(int id) {
+    log.info("Parent was deleted");
     Parent parent = parentRepository.findById(id);
     parentRepository.delete(parent);
 

@@ -12,16 +12,19 @@ import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 
 import lombok.Data;
+
 /**
  * Clase Entity de FamilyMember
  * <p>
  * Se mapea la base de datos
+ * 
  * @author aescalan
  * @version 1.0
  */
 @Entity
 @Table(name = "family_members")
 @Data
+
 public class FamilyMember {
 
   @GeneratedValue(strategy = GenerationType.IDENTITY)

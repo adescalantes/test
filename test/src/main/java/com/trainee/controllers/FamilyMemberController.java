@@ -17,6 +17,9 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.trainee.models.FamilyMember;
 import com.trainee.services.FamilyMemberService;
+
+import io.swagger.annotations.ApiOperation;
+
 /**
  * Clase para manejar el RestController de FamilyMember
  * 
@@ -25,6 +28,7 @@ import com.trainee.services.FamilyMemberService;
  */
 @RestController
 @RequestMapping("/v1")
+
 public class FamilyMemberController {
 
   @Autowired
@@ -35,6 +39,7 @@ public class FamilyMemberController {
    * 
    * @return Todos los FamilyMembers almacenados
    */
+  @ApiOperation("Return all FamilyMembers")
   @GetMapping("/familyMembers")
   public List<FamilyMember> getAll() {
     return familyMemberService.getAll();
@@ -43,9 +48,11 @@ public class FamilyMemberController {
   /**
    * Método POST para guardar un FamilyMember
    * 
-   * @param familyMember Ingresamos los datos del FamilyMember que deseamos agregar
+   * @param familyMember Ingresamos los datos del FamilyMember que deseamos
+   *                     agregar
    * @return Manejo de HttpStatus(201 Si se creo ó 400 si algo falló)
    */
+  @ApiOperation("Create a new FamilyMember")
   @PostMapping("/familyMembers")
   public ResponseEntity<FamilyMember> postFamilyMember(@RequestBody @Valid FamilyMember familyMember) {
     return familyMemberService.postFamilyMember(familyMember);
@@ -54,18 +61,22 @@ public class FamilyMemberController {
   /**
    * Método PUT para actualizar un FamilyMember
    * 
-   * @param familyMember Ingresamos los datos del FamilyMember que deseamos actualizar
+   * @param familyMember Ingresamos los datos del FamilyMember que deseamos
+   *                     actualizar
    * @return Manejo de HttpStatus(202 Si se actualizó ó 404 si algo falló)
    */
+  @ApiOperation("Update a FamilyMember")
   @PutMapping("/familyMembers")
   public ResponseEntity<FamilyMember> putFamilyMember(@RequestBody @Valid FamilyMember familyMember) {
     return familyMemberService.putFamilyMember(familyMember);
   }
-  
+
   /**
    * Método DELETE para eliminar un FamilyMember
+   * 
    * @param id Id del FamilyMember que deseamos eliminar
    */
+  @ApiOperation("Delete a FamilyMember")
   @DeleteMapping(value = "/familyMembers/{id}")
   public void deleteParents(@PathVariable("id") int id) {
     familyMemberService.deleteFamilyMember(id);

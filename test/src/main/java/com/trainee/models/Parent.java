@@ -15,16 +15,20 @@ import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
+
 /**
  * Clase Entity de Parent
  * <p>
  * Se mapea la base de datos
+ * 
  * @author aescalan
  * @version 1.0
  */
 @Data
 @Entity
+@AllArgsConstructor
 @Table(name = "parents")
 
 public class Parent {
@@ -46,7 +50,7 @@ public class Parent {
   @Column(name = "last_name")
   private String lastName;
 
-  @Column(name = "other_parent_details") 
+  @Column(name = "other_parent_details")
   private String otherParentDetails;
 
   @JsonIgnore
@@ -54,5 +58,17 @@ public class Parent {
   @JoinTable(name = "student_parents", joinColumns = @JoinColumn(name = "parent_id", referencedColumnName = "parent_id"), inverseJoinColumns = @JoinColumn(name = "student_id", referencedColumnName = "student_id"))
   private Set<Student> student;
 
+  public Parent(int id, String gender, String firstName, String middleName, String lastName,
+      String otherParentDetails) {
+    this.id = id;
+    this.gender = gender;
+    this.firstName = firstName;
+    this.middleName = middleName;
+    this.lastName = lastName;
+    this.otherParentDetails = otherParentDetails;
+  }
+
+  public Parent() {
+  }
 
 }

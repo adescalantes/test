@@ -2,6 +2,8 @@ package com.trainee.services;
 
 import java.util.List;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -21,6 +23,7 @@ public class FamilyMemberService {
 
   @Autowired
   private FamilyMemberRepository familyMemberRepository;
+  private static final Logger log = LoggerFactory.getLogger(FamilyService.class);
 
   /**
    * Método para obtener todos los FamilyMembers
@@ -28,6 +31,7 @@ public class FamilyMemberService {
    * @return Todos los FamilyMember
    */
   public List<FamilyMember> getAll() {
+    log.info("Getting All FamilyMembers");
     return familyMemberRepository.findAll();
   }
 
@@ -40,9 +44,11 @@ public class FamilyMemberService {
    */
   public ResponseEntity<FamilyMember> postFamilyMember(FamilyMember familyMember) {
     if (familyMemberRepository.findById(familyMember.getId()) == null) {
+      log.info("A new FamilyMember was created");
       familyMemberRepository.save(familyMember);
       return new ResponseEntity<FamilyMember>(HttpStatus.CREATED);
     } else {
+      log.debug("Can't create a new FamilyMember");
       return new ResponseEntity<FamilyMember>(HttpStatus.BAD_REQUEST);
     }
 
@@ -57,9 +63,11 @@ public class FamilyMemberService {
    */
   public ResponseEntity<FamilyMember> putFamilyMember(FamilyMember familyMember) {
     if (familyMemberRepository.findById(familyMember.getId()) != null) {
+      log.info("FamilyMember was updated");
       familyMemberRepository.save(familyMember);
       return new ResponseEntity<FamilyMember>(HttpStatus.ACCEPTED);
     } else {
+      log.debug("Can't update FamilyMember");
       return new ResponseEntity<FamilyMember>(HttpStatus.NOT_FOUND);
     }
 
@@ -71,6 +79,7 @@ public class FamilyMemberService {
    * @param id Id de FamilyMember
    */
   public void deleteFamilyMember(int id) {
+    log.info("FamilyMember was deleted");
     FamilyMember familyMember = familyMemberRepository.findById(id);
     familyMemberRepository.delete(familyMember);
 

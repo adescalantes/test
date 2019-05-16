@@ -19,6 +19,8 @@ import com.trainee.models.Family;
 import com.trainee.models.FamilyMember;
 import com.trainee.services.FamilyService;
 
+import io.swagger.annotations.ApiOperation;
+
 /**
  * Clase para manejar el RestController de Family
  * 
@@ -27,6 +29,7 @@ import com.trainee.services.FamilyService;
  */
 @RestController
 @RequestMapping("/v1")
+
 public class FamilyController {
 
   @Autowired
@@ -37,8 +40,9 @@ public class FamilyController {
    * 
    * @return Todas las Families almacenadas
    */
+  @ApiOperation("Return all Families")
   @GetMapping("/families")
-  public List<Family> getAll() {
+  public ResponseEntity<List<Family>> getAll() {
     return familyService.getAll();
   }
 
@@ -48,6 +52,7 @@ public class FamilyController {
    * @param id Id de Family que queremos obtener
    * @return FamilyMembers
    */
+  @ApiOperation("Return all Families by FamilyId")
   @GetMapping("/families/members/{id}")
   public List<FamilyMember> getFamily(@PathVariable("id") int id) {
     return familyService.getFamilyMembers(id);
@@ -59,6 +64,7 @@ public class FamilyController {
    * @param family Ingresamos los datos del Family que deseamos agregar
    * @return Manejo de HttpStatus(201 Si se creo ó 400 si algo falló)
    */
+  @ApiOperation("Create a new Family")
   @PostMapping("/families")
   public ResponseEntity<Family> postFamily(@RequestBody @Valid Family family) {
     return familyService.postFamily(family);
@@ -70,6 +76,7 @@ public class FamilyController {
    * @param family Ingresamos los datos del Family que deseamos actualizar
    * @return Manejo de HttpStatus(202 Si se actualizó ó 404 si algo falló)
    */
+  @ApiOperation("Update a Family")
   @PutMapping("/families")
   public ResponseEntity<Family> putFamily(@RequestBody @Valid Family family) {
     return familyService.putFamily(family);
@@ -77,8 +84,10 @@ public class FamilyController {
 
   /**
    * Método DELETE para eliminar un Family
+   * 
    * @param id Id del Family que deseamos eliminar
    */
+  @ApiOperation("Delete a Family")
   @DeleteMapping(value = "/families/{id}")
   public void deleteFamily(@PathVariable("id") int id) {
     familyService.deleteFamily(id);

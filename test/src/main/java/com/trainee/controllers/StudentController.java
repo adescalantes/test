@@ -17,6 +17,9 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.trainee.models.Student;
 import com.trainee.services.StudentService;
+
+import io.swagger.annotations.ApiOperation;
+
 /**
  * Clase para manejar el RestController de Student
  * 
@@ -25,6 +28,7 @@ import com.trainee.services.StudentService;
  */
 @RestController
 @RequestMapping("/v1")
+
 public class StudentController {
 
   @Autowired
@@ -36,6 +40,7 @@ public class StudentController {
    * @return Todos los Students almacenados
    */
   @GetMapping(value = "/students")
+  @ApiOperation("Return all Students")
   public List<Student> getAll() {
     return studentService.getAll();
   }
@@ -47,6 +52,7 @@ public class StudentController {
    * @return Manejo de HttpStatus(201 Si se creo ó 400 si algo falló)
    */
   @PostMapping(value = "/students")
+  @ApiOperation("Create a new Student")
   public ResponseEntity<Student> postStudent(@RequestBody @Valid Student student) {
     return studentService.postStudent(student);
   }
@@ -58,15 +64,18 @@ public class StudentController {
    * @return Manejo de HttpStatus(202 Si se actualizó ó 404 si algo falló)
    */
   @PutMapping(value = "/students")
+  @ApiOperation("Update a Student")
   public ResponseEntity<Student> putStudent(@RequestBody @Valid Student student) {
     return studentService.putStudent(student);
   }
 
   /**
    * Método DELETE para eliminar un Student
+   * 
    * @param id Id del Student que deseamos eliminar
    */
   @DeleteMapping(value = "/students/{id}")
+  @ApiOperation("Delete a Student")
   public void deleteStudent(@PathVariable("id") int id) {
     studentService.deleteStudent(id);
   }

@@ -35,9 +35,9 @@ public class FamilyService {
    * 
    * @return Todos los FamilyMember
    */
-  public List<Family> getAll() {
+  public ResponseEntity<List<Family>> getAll() {
     log.info("Getting All Families");
-    return familyRepository.findAll();
+    return new ResponseEntity<List<Family>>(familyRepository.findAll(), HttpStatus.OK);
   }
 
   /**
@@ -59,7 +59,7 @@ public class FamilyService {
    */
   public ResponseEntity<Family> postFamily(Family family) {
     if (familyRepository.findById(family.getId()) == null) {
-      log.debug("A new family was created");
+      log.info("A new family was created");
       familyRepository.save(family);
       return new ResponseEntity<Family>(HttpStatus.CREATED);
     } else {
@@ -78,7 +78,7 @@ public class FamilyService {
    */
   public ResponseEntity<Family> putFamily(Family family) {
     if (familyRepository.findById(family.getId()) != null) {
-      log.debug("A new family was updated");
+      log.info("Family was updated");
       familyRepository.save(family);
       return new ResponseEntity<Family>(HttpStatus.ACCEPTED);
     } else {
@@ -93,10 +93,15 @@ public class FamilyService {
    * 
    * @param id Id de Family
    */
-  public void deleteFamily(int id) {
-    log.debug("A family was deleted");
+  public ResponseEntity<Family> deleteFamily(int id) {
     Family family = familyRepository.findById(id);
-    familyRepository.delete(family);
+    if (familyRepository.findById(id) != null) {
+      log.info("A family was deleted");
+      familyRepository.delete(family);
+      return new ResponseEntity<Family>(HttpStatus.ACCEPTED);
+    } else {
+      return new ResponseEntity<Family>(HttpStatus.NOT_FOUND);
+    }
 
   }
 }

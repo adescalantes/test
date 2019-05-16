@@ -2,6 +2,8 @@ package com.trainee.services;
 
 import java.util.List;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -18,7 +20,7 @@ import com.trainee.repositories.StudentRepository;
  */
 @Service
 public class StudentService {
-
+  private static final Logger log = LoggerFactory.getLogger(FamilyService.class);
   @Autowired
   private StudentRepository studentRepository;
 
@@ -28,6 +30,7 @@ public class StudentService {
    * @return Todos los Students
    */
   public List<Student> getAll() {
+    log.info("Getting All Students");
     return studentRepository.findAll();
   }
 
@@ -39,10 +42,13 @@ public class StudentService {
    * @return Manejo de HttpStatus según sea el caso
    */
   public ResponseEntity<Student> postStudent(Student student) {
+
     if (studentRepository.findById(student.getId()) == null) {
+      log.info("A new Student was created");
       studentRepository.save(student);
       return new ResponseEntity<Student>(HttpStatus.CREATED);
     } else {
+      log.debug("Can't create a new Student");
       return new ResponseEntity<Student>(HttpStatus.BAD_REQUEST);
     }
 
@@ -57,9 +63,11 @@ public class StudentService {
    */
   public ResponseEntity<Student> putStudent(Student student) {
     if (studentRepository.findById(student.getId()) != null) {
+      log.info("A new Student was updated");
       studentRepository.save(student);
       return new ResponseEntity<Student>(HttpStatus.ACCEPTED);
     } else {
+      log.debug("Can't update a new Student");
       return new ResponseEntity<Student>(HttpStatus.NOT_FOUND);
     }
 
@@ -71,6 +79,7 @@ public class StudentService {
    * @param id Id de Student
    */
   public void deleteStudent(int id) {
+    log.info("Student was deleted");
     Student student = studentRepository.findById(id);
     studentRepository.delete(student);
 

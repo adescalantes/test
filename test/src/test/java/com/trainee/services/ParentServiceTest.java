@@ -1,11 +1,24 @@
 package com.trainee.services;
 
-import static org.mockito.Mockito.when;
+import static org.junit.Assert.assertEquals;
 
+import org.junit.jupiter.api.Test;
+import org.mockito.Mock;
 
 import com.trainee.models.Parent;
-import com.trainee.repositories.ParentRepository;
 
 class ParentServiceTest {
+
+  @Mock
+  private Parent parent;
+
+  @Test
+  public void testFindById() {
+    parent.setId(1);
+    parent.setFirstName("asd");
+    parent.setGender("asddf");
+
+    assertEquals(parent.getId(), 1);
+  }
 
 }
