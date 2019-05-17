@@ -21,7 +21,7 @@ import com.trainee.services.FamilyMemberService;
 import io.swagger.annotations.ApiOperation;
 
 /**
- * Clase para manejar el RestController de FamilyMember
+ * Clase para manejar el RestController de la clase FamilyMember
  * 
  * @author aescalan
  * @version 1.0
@@ -35,9 +35,9 @@ public class FamilyMemberController {
   private FamilyMemberService familyMemberService;
 
   /**
-   * Método GET para obtener todos los FamilyMembers
+   * Método GET para obtener todos los objetos de la clase FamilyMembers
    * 
-   * @return Todos los FamilyMembers almacenados
+   * @return todos los objetos de la clase FamilyMembers almacenados
    */
   @ApiOperation("Return all FamilyMembers")
   @GetMapping("/familyMembers")
@@ -46,9 +46,9 @@ public class FamilyMemberController {
   }
 
   /**
-   * Método POST para guardar un FamilyMember
+   * Método POST para guardar un objeto de la clase FamilyMember
    * 
-   * @param familyMember Ingresamos los datos del FamilyMember que deseamos
+   * @param familyMember Ingresamos los datos del objeto FamilyMember que deseamos
    *                     agregar
    * @return Manejo de HttpStatus(201 Si se creo ó 400 si algo falló)
    */
@@ -59,9 +59,9 @@ public class FamilyMemberController {
   }
 
   /**
-   * Método PUT para actualizar un FamilyMember
+   * Método PUT para actualizar un objeto de la clase FamilyMember
    * 
-   * @param familyMember Ingresamos los datos del FamilyMember que deseamos
+   * @param familyMember Ingresamos los datos del objeto FamilyMember que deseamos
    *                     actualizar
    * @return Manejo de HttpStatus(202 Si se actualizó ó 404 si algo falló)
    */
@@ -72,14 +72,14 @@ public class FamilyMemberController {
   }
 
   /**
-   * Método DELETE para eliminar un FamilyMember
+   * Método DELETE para eliminar un objeto de la clase FamilyMember
    * 
-   * @param id Id del FamilyMember que deseamos eliminar
+   * @param id Id del objeto FamilyMember que deseamos eliminar
    */
   @ApiOperation("Delete a FamilyMember")
   @DeleteMapping(value = "/familyMembers/{id}")
-  public void deleteParents(@PathVariable("id") int id) {
-    familyMemberService.deleteFamilyMember(id);
+  public ResponseEntity<FamilyMember> deleteParents(@PathVariable("id") int id) {
+    return familyMemberService.deleteFamilyMember(id);
   }
 
 }

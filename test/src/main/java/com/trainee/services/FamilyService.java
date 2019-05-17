@@ -15,7 +15,7 @@ import com.trainee.repositories.FamilyMemberRepository;
 import com.trainee.repositories.FamilyRepository;
 
 /**
- * Clase donde se realizá la lógica de Family para su respectivo CRUD
+ * Clase donde se realizá la lógica de la clase Family para su respectivo CRUD
  * 
  * @author aescalan
  * @version 1.0
@@ -31,9 +31,9 @@ public class FamilyService {
   private FamilyMemberRepository familyMemberRepository;
 
   /**
-   * Método para obtener todos las Families
+   * Método para obtener todos los objetos de la clase Families
    * 
-   * @return Todos los FamilyMember
+   * @return Todos los objetos de la clase FamilyMember
    */
   public ResponseEntity<List<Family>> getAll() {
     log.info("Getting All Families");
@@ -41,10 +41,10 @@ public class FamilyService {
   }
 
   /**
-   * Método para obtener todos los FamilyMembers por un FamilyId
+   * Método para obtener todos los objetos de la clase FamilyMembers por un FamilyId
    * 
-   * @param id Recibir un familyId
-   * @return Todos los FamilyMember por familyId
+   * @param id Recibir un familyId de la clase Family
+   * @return Todos los objetos de la clase FamilyMember por familyId
    */
   public List<FamilyMember> getFamilyMembers(int id) {
     log.info("Getting all familyMembers by familyId");
@@ -52,9 +52,9 @@ public class FamilyService {
   }
 
   /**
-   * Método para crear un Family
+   * Método para crear un objeto de la clase Family
    * 
-   * @param family Recibir un Family para luego guardar si se cumple la condición
+   * @param family Recibir un objeto Family para luego guardar si se cumple la condición
    * @return Manejo de HttpStatus según sea el caso
    */
   public ResponseEntity<Family> postFamily(Family family) {
@@ -70,9 +70,9 @@ public class FamilyService {
   }
 
   /**
-   * Método para actualizar un Family
+   * Método para actualizar un objeto de la clase Family
    * 
-   * @param family Recibir un Family para luego actualizar si se cumple la
+   * @param family Recibir un objeto Family para luego actualizar si se cumple la
    *               condición
    * @return Manejo de HttpStatus según sea el caso
    */
@@ -89,7 +89,7 @@ public class FamilyService {
   }
 
   /**
-   * Método para eliminar un Family por id
+   * Método para eliminar un objeto de la clase Family por id
    * 
    * @param id Id de Family
    */

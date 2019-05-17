@@ -9,11 +9,12 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import com.trainee.models.Family;
 import com.trainee.models.FamilyMember;
 import com.trainee.repositories.FamilyMemberRepository;
 
 /**
- * Clase donde se realizá la lógica de Family para su respectivo CRUD
+ * Clase donde se realizá la lógica de la clase FamilyMember para su respectivo CRUD
  * 
  * @author aescalan
  * @version 1.0
@@ -26,9 +27,9 @@ public class FamilyMemberService {
   private static final Logger log = LoggerFactory.getLogger(FamilyService.class);
 
   /**
-   * Método para obtener todos los FamilyMembers
+   * Método para obtener todos los objetos de la clase FamilyMembers
    * 
-   * @return Todos los FamilyMember
+   * @return Todos los objetos de la clase FamilyMember
    */
   public List<FamilyMember> getAll() {
     log.info("Getting All FamilyMembers");
@@ -36,9 +37,9 @@ public class FamilyMemberService {
   }
 
   /**
-   * Método para crear un FamilyMember
+   * Método para crear un objeto de la clase FamilyMember
    * 
-   * @param familyMember Recibir un FamilyMember para luego guardar si se cumple
+   * @param familyMember Recibir un objeto FamilyMember para luego guardar si se cumple
    *                     la condición
    * @return Manejo de HttpStatus según sea el caso
    */
@@ -55,9 +56,9 @@ public class FamilyMemberService {
   }
 
   /**
-   * Método para actualizar un FamilyMember
+   * Método para actualizar un objeto de la clase FamilyMember
    * 
-   * @param familyMember Recibir un FamilyMember para luego actualizar si se
+   * @param familyMember Recibir un objeto FamilyMember para luego actualizar si se
    *                     cumple la condición
    * @return Manejo de HttpStatus según sea el caso
    */
@@ -74,14 +75,18 @@ public class FamilyMemberService {
   }
 
   /**
-   * Método para eliminar un FamilyMember por id
+   * Método para eliminar un objeto de la clase FamilyMember por id
    * 
    * @param id Id de FamilyMember
    */
-  public void deleteFamilyMember(int id) {
-    log.info("FamilyMember was deleted");
+  public ResponseEntity<FamilyMember> deleteFamilyMember(int id) {   
     FamilyMember familyMember = familyMemberRepository.findById(id);
-    familyMemberRepository.delete(familyMember);
-
+    if (familyMemberRepository.findById(id) != null) {
+    	log.info("FamilyMember was deleted");
+      familyMemberRepository.delete(familyMember);
+      return new ResponseEntity<FamilyMember>(HttpStatus.ACCEPTED);
+    } else {
+      return new ResponseEntity<FamilyMember>(HttpStatus.NOT_FOUND);
+    }
   }
 }

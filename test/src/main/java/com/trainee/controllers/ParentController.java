@@ -16,12 +16,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.trainee.models.Parent;
+import com.trainee.models.Student;
 import com.trainee.services.ParentService;
 
 import io.swagger.annotations.ApiOperation;
 
 /**
- * Clase para manejar el RestController de Parent
+ * Clase para manejar el RestController de la clase Parent
  * 
  * @author aescalan
  * @version 1.0
@@ -35,9 +36,9 @@ public class ParentController {
   private ParentService parentService;
 
   /**
-   * Método GET para obtener todos los Parents
+   * Método GET para obtener todos los objetos de la clase Parents
    * 
-   * @return Todos los Parents almacenados
+   * @return Todos los objetos de la clase Parents almacenados
    */
   @ApiOperation("Return all Parents")
   @GetMapping(value = "/parents")
@@ -46,7 +47,7 @@ public class ParentController {
   }
 
   /**
-   * Método POST para guardar un Parent
+   * Método POST para guardar un objeto de la clase Parent
    * 
    * @param parent Ingresamos los datos del Parent que deseamos agregar
    * @return Manejo de HttpStatus(201 Si se creo ó 400 si algo falló)
@@ -58,9 +59,9 @@ public class ParentController {
   }
 
   /**
-   * Método PUT para actualizar un Parent
+   * Método PUT para actualizar un objeto de la clase Parent
    * 
-   * @param parent Ingresamos los datos del Parent que deseamos actualizar
+   * @param parent Ingresamos los datos del objeto Parent que deseamos actualizar
    * @return Manejo de HttpStatus(202 Si se actualizó ó 404 si algo falló)
    */
   @ApiOperation("Update a Parent")
@@ -70,13 +71,13 @@ public class ParentController {
   }
 
   /**
-   * Método DELETE para eliminar un Parent
+   * Método DELETE para eliminar un objeto de la clase Parent
    * 
    * @param id Id del Parent que deseamos eliminar
    */
   @ApiOperation("Delete a Parent")
   @DeleteMapping(value = "/parents/{id}")
-  public void deleteParent(@PathVariable("id") int id) {
-    parentService.deleteParent(id);
+  public ResponseEntity<Parent> deleteParent(@PathVariable("id") int id) {
+    return parentService.deleteParent(id);
   }
 }

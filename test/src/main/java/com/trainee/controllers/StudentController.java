@@ -21,7 +21,7 @@ import com.trainee.services.StudentService;
 import io.swagger.annotations.ApiOperation;
 
 /**
- * Clase para manejar el RestController de Student
+ * Clase para manejar el RestController de la clase Student
  * 
  * @author aescalan
  * @version 1.0
@@ -35,9 +35,9 @@ public class StudentController {
   private StudentService studentService;
 
   /**
-   * Método GET para obtener todos los Students
+   * Método GET para obtener todos los objetos de la clase Students
    * 
-   * @return Todos los Students almacenados
+   * @return Todos los objetos de la clase Students almacenados
    */
   @GetMapping(value = "/students")
   @ApiOperation("Return all Students")
@@ -46,9 +46,9 @@ public class StudentController {
   }
 
   /**
-   * Método POST para guardar un Student
+   * Método POST para guardar un objeto de la clase Student
    * 
-   * @param student Ingresamos los datos del Student que deseamos agregar
+   * @param student Ingresamos los datos del objeto Student que deseamos agregar
    * @return Manejo de HttpStatus(201 Si se creo ó 400 si algo falló)
    */
   @PostMapping(value = "/students")
@@ -58,9 +58,9 @@ public class StudentController {
   }
 
   /**
-   * Método PUT para actualizar un Student
+   * Método PUT para actualizar un objeto de la clase Student
    * 
-   * @param student Ingresamos los datos del Student que deseamos actualizar
+   * @param student Ingresamos los datos del objeto Student que deseamos actualizar
    * @return Manejo de HttpStatus(202 Si se actualizó ó 404 si algo falló)
    */
   @PutMapping(value = "/students")
@@ -70,13 +70,13 @@ public class StudentController {
   }
 
   /**
-   * Método DELETE para eliminar un Student
+   * Método DELETE para eliminar un objeto de la clase Student
    * 
-   * @param id Id del Student que deseamos eliminar
+   * @param id Id del objeto Student que deseamos eliminar
    */
   @DeleteMapping(value = "/students/{id}")
   @ApiOperation("Delete a Student")
-  public void deleteStudent(@PathVariable("id") int id) {
-    studentService.deleteStudent(id);
+  public ResponseEntity<Student> deleteStudent(@PathVariable("id") int id) {
+    return studentService.deleteStudent(id);
   }
 }

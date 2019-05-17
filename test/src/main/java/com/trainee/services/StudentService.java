@@ -9,11 +9,12 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import com.trainee.models.Parent;
 import com.trainee.models.Student;
 import com.trainee.repositories.StudentRepository;
 
 /**
- * Clase donde se realizá la lógica de Student para su respectivo CRUD
+ * Clase donde se realizá la lógica de la clase Student para su respectivo CRUD
  * 
  * @author aescalan
  * @version 1.0
@@ -25,9 +26,9 @@ public class StudentService {
   private StudentRepository studentRepository;
 
   /**
-   * Método para obtener todos los Students
+   * Método para obtener todos los objetos de la clase Students
    * 
-   * @return Todos los Students
+   * @return Todos los objetos de la clase Students
    */
   public List<Student> getAll() {
     log.info("Getting All Students");
@@ -35,9 +36,9 @@ public class StudentService {
   }
 
   /**
-   * Método para guardar un Student
+   * Método para crear un objeto de la clase Student
    * 
-   * @param student Recibir un Student para luego guardar si se cumple la
+   * @param student Recibir un objeto Student para luego guardar si se cumple la
    *                condición
    * @return Manejo de HttpStatus según sea el caso
    */
@@ -55,9 +56,9 @@ public class StudentService {
   }
 
   /**
-   * Método para actualizar un Student
+   * Método para actualizar un objeto de la clase Student
    * 
-   * @param student Recibir un Student para luego actualizar si se cumple la
+   * @param student Recibir un objeto Student para luego actualizar si se cumple la
    *                condición
    * @return Manejo de HttpStatus según sea el caso
    */
@@ -74,14 +75,19 @@ public class StudentService {
   }
 
   /**
-   * Método para eliminar un Student por id
+   * Método para eliminar un objeto de la clase Student por id
    * 
    * @param id Id de Student
    */
-  public void deleteStudent(int id) {
-    log.info("Student was deleted");
+  public ResponseEntity<Student> deleteStudent(int id) { 
     Student student = studentRepository.findById(id);
-    studentRepository.delete(student);
+    if (studentRepository.findById(id) != null) {
+    	log.info("Student was deleted");
+    	studentRepository.delete(student);
+      return new ResponseEntity<Student>(HttpStatus.ACCEPTED);
+    } else {
+      return new ResponseEntity<Student>(HttpStatus.NOT_FOUND);
+    }
 
   }
 }

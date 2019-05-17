@@ -36,9 +36,9 @@ public class FamilyController {
   private FamilyService familyService;
 
   /**
-   * Método GET para obtener todas las Families
+   * Método GET para obtener todos los objetos de la clase Family
    * 
-   * @return Todas las Families almacenadas
+   * @return Todos los objetos de la clase Family almacenadas
    */
   @ApiOperation("Return all Families")
   @GetMapping("/families")
@@ -47,7 +47,7 @@ public class FamilyController {
   }
 
   /**
-   * Método GET para obtener todos los FamilyMembers por un FamilyId
+   * Método GET para obtener todos los objetos de la clase FamilyMembers por un parámetro FamilyId
    * 
    * @param id Id de Family que queremos obtener
    * @return FamilyMembers
@@ -59,9 +59,9 @@ public class FamilyController {
   }
 
   /**
-   * Método POST para guardar un Family
+   * Método POST para guardar un objeto de la clase Family
    * 
-   * @param family Ingresamos los datos del Family que deseamos agregar
+   * @param family Ingresamos los datos del objeto Family que deseamos agregar
    * @return Manejo de HttpStatus(201 Si se creo ó 400 si algo falló)
    */
   @ApiOperation("Create a new Family")
@@ -71,9 +71,9 @@ public class FamilyController {
   }
 
   /**
-   * Método PUT para actualizar un Family
+   * Método PUT para actualizar un objeto de la clase Family
    * 
-   * @param family Ingresamos los datos del Family que deseamos actualizar
+   * @param family Ingresamos los datos del objeto Family que deseamos actualizar
    * @return Manejo de HttpStatus(202 Si se actualizó ó 404 si algo falló)
    */
   @ApiOperation("Update a Family")
@@ -83,13 +83,13 @@ public class FamilyController {
   }
 
   /**
-   * Método DELETE para eliminar un Family
+   * Método DELETE para eliminar un objeto de la clase Family
    * 
-   * @param id Id del Family que deseamos eliminar
+   * @param id Id del objeto Family que deseamos eliminar
    */
   @ApiOperation("Delete a Family")
   @DeleteMapping(value = "/families/{id}")
-  public void deleteFamily(@PathVariable("id") int id) {
-    familyService.deleteFamily(id);
+  public ResponseEntity<Family> deleteFamily(@PathVariable("id") int id) {
+   return familyService.deleteFamily(id);
   }
 }
