@@ -23,7 +23,7 @@ public class SwaggerConfig {
   }
 
   private ApiInfo apiInfo() {
-    ApiInfo apiInfo = new ApiInfo("Proyecto Everis", "Resful - CRUD básico", "1.0", "Terms of service",
+    ApiInfo apiInfo = new ApiInfo("Proyecto Everis", "Restful - CRUD básico", "1.0", "Terms of service",
         new Contact("Alexander Escalante", "", "adescalantes@company.com"), "License of API", "API license URL");
     return apiInfo;
   }

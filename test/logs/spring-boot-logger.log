@@ -65,3 +65,50 @@
 2019-05-16 16:10:05,373 DEBUG org.springframework.boot.StartupInfoLogger [main] Running with Spring Boot v2.1.4.RELEASE, Spring v5.1.6.RELEASE
 2019-05-16 16:10:05,374 INFO org.springframework.boot.SpringApplication [main] No active profile set, falling back to default profiles: default
 2019-05-16 16:10:21,948 INFO org.springframework.boot.StartupInfoLogger [main] Started TestApplication in 17.765 seconds (JVM running for 21.71)
+2019-05-17 10:52:14,389 INFO org.springframework.boot.StartupInfoLogger [main] Starting TestApplication on LIM-5CD5447V14 with PID 11688 (C:\Users\aescalan\git\test\test\target\classes started by aescalan in C:\Users\aescalan\git\test\test)
+2019-05-17 10:52:14,394 DEBUG org.springframework.boot.StartupInfoLogger [main] Running with Spring Boot v2.1.4.RELEASE, Spring v5.1.6.RELEASE
+2019-05-17 10:52:14,395 INFO org.springframework.boot.SpringApplication [main] No active profile set, falling back to default profiles: default
+2019-05-17 10:52:21,428 INFO org.springframework.boot.StartupInfoLogger [main] Started TestApplication in 7.637 seconds (JVM running for 8.957)
+2019-05-17 10:52:59,925 INFO com.trainee.services.ParentService [https-jsse-nio-8443-exec-5] Getting All FamilyMembers
+2019-05-17 10:54:19,774 INFO com.trainee.services.ParentService [https-jsse-nio-8443-exec-3] Getting All FamilyMembers
+2019-05-17 11:35:28,821 DEBUG com.trainee.services.FamilyService [https-jsse-nio-8443-exec-10] Can't create a new family
+2019-05-17 11:35:41,252 INFO com.trainee.services.FamilyService [https-jsse-nio-8443-exec-5] A new family was created
+2019-05-17 11:35:45,176 INFO com.trainee.services.FamilyService [https-jsse-nio-8443-exec-6] Getting All Families
+2019-05-17 11:36:18,160 INFO com.trainee.services.FamilyService [https-jsse-nio-8443-exec-7] Family was updated
+2019-05-17 11:36:21,977 INFO com.trainee.services.FamilyService [https-jsse-nio-8443-exec-8] Getting All Families
+2019-05-17 11:46:33,571 INFO com.trainee.services.FamilyService [https-jsse-nio-8443-exec-5] Getting All Families
+2019-05-17 11:51:11,265 INFO com.trainee.services.FamilyService [https-jsse-nio-8443-exec-3] Getting All Families
+2019-05-17 11:51:21,230 INFO com.trainee.services.ParentService [https-jsse-nio-8443-exec-2] Getting All FamilyMembers
+2019-05-17 12:06:07,884 INFO com.trainee.services.ParentService [https-jsse-nio-8443-exec-9] Getting All FamilyMembers
+2019-05-17 12:29:40,554 INFO com.trainee.services.FamilyMemberService [https-jsse-nio-8443-exec-8] Getting All FamilyMembers
+2019-05-17 12:30:18,402 INFO com.trainee.services.FamilyMemberService [https-jsse-nio-8443-exec-7] Getting All FamilyMembers
+2019-05-17 12:30:43,362 INFO com.trainee.services.ParentService [https-jsse-nio-8443-exec-5] Getting All FamilyMembers
+2019-05-17 12:31:20,631 INFO com.trainee.services.ParentService [https-jsse-nio-8443-exec-3] Parent was updated
+2019-05-17 12:31:24,673 INFO com.trainee.services.ParentService [https-jsse-nio-8443-exec-2] Getting All FamilyMembers
+2019-05-17 12:48:49,584 INFO com.trainee.services.FamilyService [https-jsse-nio-8443-exec-9] Getting All Families
+2019-05-17 12:49:06,287 INFO com.trainee.services.FamilyMemberService [https-jsse-nio-8443-exec-1] Getting All FamilyMembers
+2019-05-17 12:49:12,132 INFO com.trainee.services.StudentService [https-jsse-nio-8443-exec-3] Getting All Students
+2019-05-17 12:52:28,357 INFO com.trainee.services.StudentService [https-jsse-nio-8443-exec-6] Getting All Students
+2019-05-17 13:06:38,062 INFO com.trainee.services.FamilyService [https-jsse-nio-8443-exec-2] Getting All Families
+2019-05-17 13:06:42,667 INFO com.trainee.services.FamilyMemberService [https-jsse-nio-8443-exec-4] Getting All FamilyMembers
+2019-05-17 13:06:47,705 INFO com.trainee.services.StudentService [https-jsse-nio-8443-exec-5] Getting All Students
+2019-05-17 13:06:53,257 INFO com.trainee.services.StudentService [https-jsse-nio-8443-exec-6] A new Student was created
+2019-05-17 13:07:23,640 INFO com.trainee.services.StudentService [https-jsse-nio-8443-exec-9] A new Student was created
+2019-05-17 13:07:26,865 INFO com.trainee.services.StudentService [https-jsse-nio-8443-exec-2] Getting All Students
+2019-05-17 13:13:49,169 INFO com.trainee.services.StudentService [https-jsse-nio-8443-exec-10] Getting All Students
+2019-05-17 13:15:43,160 INFO com.trainee.services.StudentService [https-jsse-nio-8443-exec-6] Getting All Students
+2019-05-17 13:16:05,119 INFO com.trainee.services.StudentService [https-jsse-nio-8443-exec-8] A new Student was created
+2019-05-17 13:16:08,681 INFO com.trainee.services.StudentService [https-jsse-nio-8443-exec-7] Getting All Students
+2019-05-17 13:24:03,130 INFO org.springframework.boot.StartupInfoLogger [main] Starting TestApplication on LIM-5CD5447V14 with PID 9396 (C:\Users\aescalan\git\test\test\target\classes started by aescalan in C:\Users\aescalan\git\test\test)
+2019-05-17 13:24:03,152 DEBUG org.springframework.boot.StartupInfoLogger [main] Running with Spring Boot v2.1.4.RELEASE, Spring v5.1.6.RELEASE
+2019-05-17 13:24:03,152 INFO org.springframework.boot.SpringApplication [main] No active profile set, falling back to default profiles: default
+2019-05-17 13:24:12,038 INFO org.springframework.boot.StartupInfoLogger [main] Started TestApplication in 9.711 seconds (JVM running for 10.833)
+2019-05-17 14:18:00,768 INFO com.trainee.services.ParentService [https-jsse-nio-8443-exec-5] Getting All Parents
+2019-05-17 14:18:18,317 DEBUG com.trainee.services.ParentService [https-jsse-nio-8443-exec-7] Can't update Parent
+2019-05-17 14:18:53,588 INFO com.trainee.services.ParentService [https-jsse-nio-8443-exec-8] Parent was updated
+2019-05-17 16:40:36,943 INFO org.springframework.boot.StartupInfoLogger [main] Starting TestApplication on LIM-5CD5447V14 with PID 9736 (C:\Users\aescalan\git\test\test\target\classes started by aescalan in C:\Users\aescalan\git\test\test)
+2019-05-17 16:40:36,962 DEBUG org.springframework.boot.StartupInfoLogger [main] Running with Spring Boot v2.1.4.RELEASE, Spring v5.1.6.RELEASE
+2019-05-17 16:40:36,965 INFO org.springframework.boot.SpringApplication [main] No active profile set, falling back to default profiles: default
+2019-05-17 16:40:47,002 INFO org.springframework.boot.StartupInfoLogger [main] Started TestApplication in 10.967 seconds (JVM running for 13.684)
+2019-05-17 16:40:47,530 INFO com.trainee.services.ParentService [https-jsse-nio-8443-exec-4] Getting All Parents
+2019-05-17 16:41:05,757 INFO com.trainee.services.ParentService [https-jsse-nio-8443-exec-7] A new Parent was created

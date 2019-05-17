@@ -1,4 +1,4 @@
-package com.trainee.services;
+package com.trainee.services.implement;
 
 import java.util.List;
 

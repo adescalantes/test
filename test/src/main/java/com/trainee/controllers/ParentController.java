@@ -16,9 +16,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.trainee.models.Parent;
-import com.trainee.models.Student;
 import com.trainee.services.ParentService;
 
+import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 
 /**
@@ -29,7 +29,7 @@ import io.swagger.annotations.ApiOperation;
  */
 @RestController
 @RequestMapping("/v1")
-
+@Api(tags = "CRUD Parent")
 public class ParentController {
 
   @Autowired

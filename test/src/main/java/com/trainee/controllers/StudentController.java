@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.trainee.models.Student;
 import com.trainee.services.StudentService;
 
+import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 
 /**
@@ -28,7 +29,7 @@ import io.swagger.annotations.ApiOperation;
  */
 @RestController
 @RequestMapping("/v1")
-
+@Api(tags = "CRUD Student")
 public class StudentController {
 
   @Autowired
@@ -60,7 +61,8 @@ public class StudentController {
   /**
    * Método PUT para actualizar un objeto de la clase Student
    * 
-   * @param student Ingresamos los datos del objeto Student que deseamos actualizar
+   * @param student Ingresamos los datos del objeto Student que deseamos
+   *                actualizar
    * @return Manejo de HttpStatus(202 Si se actualizó ó 404 si algo falló)
    */
   @PutMapping(value = "/students")

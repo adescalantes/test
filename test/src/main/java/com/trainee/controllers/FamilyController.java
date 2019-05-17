@@ -19,6 +19,7 @@ import com.trainee.models.Family;
 import com.trainee.models.FamilyMember;
 import com.trainee.services.FamilyService;
 
+import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 
 /**
@@ -29,7 +30,7 @@ import io.swagger.annotations.ApiOperation;
  */
 @RestController
 @RequestMapping("/v1")
-
+@Api(tags = "CRUD Family")
 public class FamilyController {
 
   @Autowired
@@ -47,7 +48,8 @@ public class FamilyController {
   }
 
   /**
-   * Método GET para obtener todos los objetos de la clase FamilyMembers por un parámetro FamilyId
+   * Método GET para obtener todos los objetos de la clase FamilyMembers por un
+   * parámetro FamilyId
    * 
    * @param id Id de Family que queremos obtener
    * @return FamilyMembers
@@ -90,6 +92,6 @@ public class FamilyController {
   @ApiOperation("Delete a Family")
   @DeleteMapping(value = "/families/{id}")
   public ResponseEntity<Family> deleteFamily(@PathVariable("id") int id) {
-   return familyService.deleteFamily(id);
+    return familyService.deleteFamily(id);
   }
 }

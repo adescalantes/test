@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.trainee.models.FamilyMember;
 import com.trainee.services.FamilyMemberService;
 
+import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 
 /**
@@ -28,7 +29,7 @@ import io.swagger.annotations.ApiOperation;
  */
 @RestController
 @RequestMapping("/v1")
-
+@Api(tags = "CRUD FamilyMember")
 public class FamilyMemberController {
 
   @Autowired
