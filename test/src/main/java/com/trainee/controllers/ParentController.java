@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.trainee.models.Parent;
+import com.trainee.services.IParentService;
 import com.trainee.services.ParentService;
 
 import io.swagger.annotations.Api;
@@ -33,7 +34,7 @@ import io.swagger.annotations.ApiOperation;
 public class ParentController {
 
   @Autowired
-  private ParentService parentService;
+  private IParentService parentService;
 
   /**
    * Método GET para obtener todos los objetos de la clase Parents
@@ -54,8 +55,8 @@ public class ParentController {
    */
   @ApiOperation("Create a new Parent")
   @PostMapping(value = "/parents")
-  public ResponseEntity<Parent> postParent(@RequestBody @Valid Parent parent) {
-    return parentService.postParent(parent);
+  public void postParent(@RequestBody @Valid Parent parent) {
+    parentService.post(parent);
   }
 
   /**
@@ -66,8 +67,8 @@ public class ParentController {
    */
   @ApiOperation("Update a Parent")
   @PutMapping(value = "/parents")
-  public ResponseEntity<Parent> putParent(@RequestBody @Valid Parent parent) {
-    return parentService.putParent(parent);
+  public void putParent(@RequestBody @Valid Parent parent) {
+    parentService.putById(parent);
   }
 
   /**
@@ -77,7 +78,7 @@ public class ParentController {
    */
   @ApiOperation("Delete a Parent")
   @DeleteMapping(value = "/parents/{id}")
-  public ResponseEntity<Parent> deleteParent(@PathVariable("id") int id) {
-    return parentService.deleteParent(id);
+  public void deleteParent(@PathVariable("id") int parentId) {
+    parentService.deleteById(parentId);
   }
 }

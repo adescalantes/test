@@ -1,4 +1,4 @@
-package com.trainee.services;
+package com.trainee.services.implement;
 
 import java.util.List;
 
@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 import com.trainee.models.Family;
 import com.trainee.models.FamilyMember;
 import com.trainee.repositories.FamilyMemberRepository;
+import com.trainee.services.IFamilyMemberService;
 
 /**
  * Clase donde se realizá la lógica de la clase FamilyMember para su respectivo CRUD
@@ -20,11 +21,11 @@ import com.trainee.repositories.FamilyMemberRepository;
  * @version 1.0
  */
 @Service
-public class FamilyMemberService {
+public class FamilyMemberServiceImpl implements IFamilyMemberService {
 
   @Autowired
   private FamilyMemberRepository familyMemberRepository;
-  private static final Logger log = LoggerFactory.getLogger(FamilyService.class);
+  private static final Logger log = LoggerFactory.getLogger(FamilyServiceImpl.class);
 
   /**
    * Método para obtener todos los objetos de la clase FamilyMembers
@@ -43,14 +44,12 @@ public class FamilyMemberService {
    *                     la condición
    * @return Manejo de HttpStatus según sea el caso
    */
-  public ResponseEntity<FamilyMember> postFamilyMember(FamilyMember familyMember) {
+  public void post(FamilyMember familyMember) {
     if (familyMemberRepository.findById(familyMember.getId()) == null) {
       log.info("A new FamilyMember was created");
       familyMemberRepository.save(familyMember);
-      return new ResponseEntity<FamilyMember>(HttpStatus.CREATED);
     } else {
       log.debug("Can't create a new FamilyMember");
-      return new ResponseEntity<FamilyMember>(HttpStatus.BAD_REQUEST);
     }
 
   }
@@ -62,14 +61,12 @@ public class FamilyMemberService {
    *                     cumple la condición
    * @return Manejo de HttpStatus según sea el caso
    */
-  public ResponseEntity<FamilyMember> putFamilyMember(FamilyMember familyMember) {
+  public void putById(FamilyMember familyMember) {
     if (familyMemberRepository.findById(familyMember.getId()) != null) {
       log.info("FamilyMember was updated");
       familyMemberRepository.save(familyMember);
-      return new ResponseEntity<FamilyMember>(HttpStatus.ACCEPTED);
     } else {
       log.debug("Can't update FamilyMember");
-      return new ResponseEntity<FamilyMember>(HttpStatus.NOT_FOUND);
     }
 
   }
@@ -79,14 +76,13 @@ public class FamilyMemberService {
    * 
    * @param id Id de FamilyMember
    */
-  public ResponseEntity<FamilyMember> deleteFamilyMember(int id) {   
-    FamilyMember familyMember = familyMemberRepository.findById(id);
-    if (familyMemberRepository.findById(id) != null) {
+  public void deleteById(int familyMemberId) {   
+    FamilyMember familyMember = familyMemberRepository.findById(familyMemberId);
+    if (familyMemberRepository.findById(familyMemberId) != null) {
     	log.info("FamilyMember was deleted");
       familyMemberRepository.delete(familyMember);
-      return new ResponseEntity<FamilyMember>(HttpStatus.ACCEPTED);
     } else {
-      return new ResponseEntity<FamilyMember>(HttpStatus.NOT_FOUND);
+    	log.info("Can't delete FamilyMember");
     }
   }
 }

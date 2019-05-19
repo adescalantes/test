@@ -1,4 +1,4 @@
-package com.trainee.services;
+package com.trainee.services.implement;
 
 import java.util.List;
 
@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 import com.trainee.models.Parent;
 import com.trainee.models.Student;
 import com.trainee.repositories.StudentRepository;
+import com.trainee.services.IStudentService;
 
 /**
  * Clase donde se realizá la lógica de la clase Student para su respectivo CRUD
@@ -20,8 +21,8 @@ import com.trainee.repositories.StudentRepository;
  * @version 1.0
  */
 @Service
-public class StudentService {
-  private static final Logger log = LoggerFactory.getLogger(FamilyService.class);
+public class StudentServiceImpl implements IStudentService {
+  private static final Logger log = LoggerFactory.getLogger(FamilyServiceImpl.class);
   @Autowired
   private StudentRepository studentRepository;
 
@@ -42,15 +43,13 @@ public class StudentService {
    *                condición
    * @return Manejo de HttpStatus según sea el caso
    */
-  public ResponseEntity<Student> postStudent(Student student) {
+  public void post(Student student) {
 
     if (studentRepository.findById(student.getId()) == null) {
       log.info("A new Student was created");
       studentRepository.save(student);
-      return new ResponseEntity<Student>(HttpStatus.CREATED);
     } else {
       log.debug("Can't create a new Student");
-      return new ResponseEntity<Student>(HttpStatus.BAD_REQUEST);
     }
 
   }
@@ -62,14 +61,12 @@ public class StudentService {
    *                condición
    * @return Manejo de HttpStatus según sea el caso
    */
-  public ResponseEntity<Student> putStudent(Student student) {
+  public void putById(Student student) {
     if (studentRepository.findById(student.getId()) != null) {
       log.info("A new Student was updated");
       studentRepository.save(student);
-      return new ResponseEntity<Student>(HttpStatus.ACCEPTED);
     } else {
       log.debug("Can't update a new Student");
-      return new ResponseEntity<Student>(HttpStatus.NOT_FOUND);
     }
 
   }
@@ -79,14 +76,13 @@ public class StudentService {
    * 
    * @param id Id de Student
    */
-  public ResponseEntity<Student> deleteStudent(int id) { 
-    Student student = studentRepository.findById(id);
-    if (studentRepository.findById(id) != null) {
+  public void deleteById(int studentId) { 
+    Student student = studentRepository.findById(studentId);
+    if (studentRepository.findById(studentId) != null) {
     	log.info("Student was deleted");
     	studentRepository.delete(student);
-      return new ResponseEntity<Student>(HttpStatus.ACCEPTED);
     } else {
-      return new ResponseEntity<Student>(HttpStatus.NOT_FOUND);
+    	log.info("Can't delete Student");
     }
 
   }

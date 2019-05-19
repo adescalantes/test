@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.trainee.models.Student;
+import com.trainee.services.IStudentService;
 import com.trainee.services.StudentService;
 
 import io.swagger.annotations.Api;
@@ -33,7 +34,7 @@ import io.swagger.annotations.ApiOperation;
 public class StudentController {
 
   @Autowired
-  private StudentService studentService;
+  private IStudentService studentService;
 
   /**
    * Método GET para obtener todos los objetos de la clase Students
@@ -54,8 +55,8 @@ public class StudentController {
    */
   @PostMapping(value = "/students")
   @ApiOperation("Create a new Student")
-  public ResponseEntity<Student> postStudent(@RequestBody @Valid Student student) {
-    return studentService.postStudent(student);
+  public void postStudent(@RequestBody @Valid Student student) {
+    studentService.post(student);
   }
 
   /**
@@ -67,8 +68,8 @@ public class StudentController {
    */
   @PutMapping(value = "/students")
   @ApiOperation("Update a Student")
-  public ResponseEntity<Student> putStudent(@RequestBody @Valid Student student) {
-    return studentService.putStudent(student);
+  public void putStudent(@RequestBody @Valid Student student) {
+    studentService.putById(student);
   }
 
   /**
@@ -78,7 +79,7 @@ public class StudentController {
    */
   @DeleteMapping(value = "/students/{id}")
   @ApiOperation("Delete a Student")
-  public ResponseEntity<Student> deleteStudent(@PathVariable("id") int id) {
-    return studentService.deleteStudent(id);
+  public void deleteStudent(@PathVariable("id") int studentId) {
+    studentService.deleteById(studentId);
   }
 }

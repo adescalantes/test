@@ -13,6 +13,7 @@ import com.trainee.models.Family;
 import com.trainee.models.FamilyMember;
 import com.trainee.repositories.FamilyMemberRepository;
 import com.trainee.repositories.FamilyRepository;
+import com.trainee.services.IFamilyService;
 
 /**
  * Clase donde se realizá la lógica de la clase Family para su respectivo CRUD
@@ -21,8 +22,8 @@ import com.trainee.repositories.FamilyRepository;
  * @version 1.0
  */
 @Service
-public class FamilyService {
-  private static final Logger log = LoggerFactory.getLogger(FamilyService.class);
+public class FamilyServiceImpl implements IFamilyService {
+  private static final Logger log = LoggerFactory.getLogger(FamilyServiceImpl.class);
 
   @Autowired
   private FamilyRepository familyRepository;
@@ -35,9 +36,9 @@ public class FamilyService {
    * 
    * @return Todos los objetos de la clase FamilyMember
    */
-  public ResponseEntity<List<Family>> getAll() {
+  public List<Family> getAll() {
     log.info("Getting All Families");
-    return new ResponseEntity<List<Family>>(familyRepository.findAll(), HttpStatus.OK);
+    return familyRepository.findAll();
   }
 
   /**
@@ -47,9 +48,9 @@ public class FamilyService {
    * @param id Recibir un familyId de la clase Family
    * @return Todos los objetos de la clase FamilyMember por familyId
    */
-  public List<FamilyMember> getFamilyMembers(int id) {
+  public List<FamilyMember> getFamilyMembers(int familyId) {
     log.info("Getting all familyMembers by familyId");
-    return familyMemberRepository.findByFamilyId(id);
+    return familyMemberRepository.findByFamilyId(familyId);
   }
 
   /**
@@ -59,14 +60,12 @@ public class FamilyService {
    *               condición
    * @return Manejo de HttpStatus según sea el caso
    */
-  public ResponseEntity<Family> postFamily(Family family) {
+  public void post(Family family) {
     if (familyRepository.findById(family.getId()) == null) {
       log.info("A new family was created");
       familyRepository.save(family);
-      return new ResponseEntity<Family>(HttpStatus.CREATED);
     } else {
       log.debug("Can't create a new family");
-      return new ResponseEntity<Family>(HttpStatus.BAD_REQUEST);
     }
 
   }
@@ -78,14 +77,12 @@ public class FamilyService {
    *               condición
    * @return Manejo de HttpStatus según sea el caso
    */
-  public ResponseEntity<Family> putFamily(Family family) {
+  public void putById(Family family) {
     if (familyRepository.findById(family.getId()) != null) {
       log.info("Family was updated");
       familyRepository.save(family);
-      return new ResponseEntity<Family>(HttpStatus.ACCEPTED);
     } else {
       log.debug("Can't update that family");
-      return new ResponseEntity<Family>(HttpStatus.NOT_FOUND);
     }
 
   }
@@ -95,14 +92,13 @@ public class FamilyService {
    * 
    * @param id Id de Family
    */
-  public ResponseEntity<Family> deleteFamily(int id) {
-    Family family = familyRepository.findById(id);
-    if (familyRepository.findById(id) != null) {
+  public void deleteById(int familyId) {
+    Family family = familyRepository.findById(familyId);
+    if (familyRepository.findById(familyId) != null) {
       log.info("A family was deleted");
       familyRepository.delete(family);
-      return new ResponseEntity<Family>(HttpStatus.ACCEPTED);
     } else {
-      return new ResponseEntity<Family>(HttpStatus.NOT_FOUND);
+      log.info("Can't delete Family");
     }
 
   }

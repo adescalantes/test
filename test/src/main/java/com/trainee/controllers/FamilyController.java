@@ -18,6 +18,8 @@ import org.springframework.web.bind.annotation.RestController;
 import com.trainee.models.Family;
 import com.trainee.models.FamilyMember;
 import com.trainee.services.FamilyService;
+import com.trainee.services.IFamilyService;
+import com.trainee.services.implement.FamilyServiceImpl;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -34,7 +36,7 @@ import io.swagger.annotations.ApiOperation;
 public class FamilyController {
 
   @Autowired
-  private FamilyService familyService;
+  private IFamilyService familyService;
 
   /**
    * Método GET para obtener todos los objetos de la clase Family
@@ -43,7 +45,7 @@ public class FamilyController {
    */
   @ApiOperation("Return all Families")
   @GetMapping("/families")
-  public ResponseEntity<List<Family>> getAll() {
+  public List<Family> getAll() {
     return familyService.getAll();
   }
 
@@ -56,8 +58,8 @@ public class FamilyController {
    */
   @ApiOperation("Return all Families by FamilyId")
   @GetMapping("/families/members/{id}")
-  public List<FamilyMember> getFamily(@PathVariable("id") int id) {
-    return familyService.getFamilyMembers(id);
+  public List<FamilyMember> getFamily(@PathVariable("id") int familyId) {
+    return familyService.getFamilyMembers(familyId);
   }
 
   /**
@@ -68,8 +70,8 @@ public class FamilyController {
    */
   @ApiOperation("Create a new Family")
   @PostMapping("/families")
-  public ResponseEntity<Family> postFamily(@RequestBody @Valid Family family) {
-    return familyService.postFamily(family);
+  public void postFamily(@RequestBody @Valid Family family) {
+    familyService.post(family);
   }
 
   /**
@@ -80,8 +82,8 @@ public class FamilyController {
    */
   @ApiOperation("Update a Family")
   @PutMapping("/families")
-  public ResponseEntity<Family> putFamily(@RequestBody @Valid Family family) {
-    return familyService.putFamily(family);
+  public void putFamily(@RequestBody @Valid Family family) {
+    familyService.putById(family);
   }
 
   /**
@@ -91,7 +93,7 @@ public class FamilyController {
    */
   @ApiOperation("Delete a Family")
   @DeleteMapping(value = "/families/{id}")
-  public ResponseEntity<Family> deleteFamily(@PathVariable("id") int id) {
-    return familyService.deleteFamily(id);
+  public void deleteFamily(@PathVariable("id") int familyId) {
+    familyService.deleteById(familyId);
   }
 }

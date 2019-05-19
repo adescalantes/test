@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.trainee.models.FamilyMember;
-import com.trainee.services.FamilyMemberService;
+import com.trainee.services.IFamilyMemberService;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -33,7 +33,7 @@ import io.swagger.annotations.ApiOperation;
 public class FamilyMemberController {
 
   @Autowired
-  private FamilyMemberService familyMemberService;
+  private IFamilyMemberService familyMemberService;
 
   /**
    * Método GET para obtener todos los objetos de la clase FamilyMembers
@@ -55,8 +55,8 @@ public class FamilyMemberController {
    */
   @ApiOperation("Create a new FamilyMember")
   @PostMapping("/familyMembers")
-  public ResponseEntity<FamilyMember> postFamilyMember(@RequestBody @Valid FamilyMember familyMember) {
-    return familyMemberService.postFamilyMember(familyMember);
+  public void postFamilyMember(@RequestBody @Valid FamilyMember familyMember) {
+    familyMemberService.post(familyMember);
   }
 
   /**
@@ -68,8 +68,8 @@ public class FamilyMemberController {
    */
   @ApiOperation("Update a FamilyMember")
   @PutMapping("/familyMembers")
-  public ResponseEntity<FamilyMember> putFamilyMember(@RequestBody @Valid FamilyMember familyMember) {
-    return familyMemberService.putFamilyMember(familyMember);
+  public void putFamilyMember(@RequestBody @Valid FamilyMember familyMember) {
+    familyMemberService.putById(familyMember);
   }
 
   /**
@@ -79,8 +79,8 @@ public class FamilyMemberController {
    */
   @ApiOperation("Delete a FamilyMember")
   @DeleteMapping(value = "/familyMembers/{id}")
-  public ResponseEntity<FamilyMember> deleteParents(@PathVariable("id") int id) {
-    return familyMemberService.deleteFamilyMember(id);
+  public void deleteParents(@PathVariable("id") int id) {
+    familyMemberService.deleteById(id);
   }
 
 }
