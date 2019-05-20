@@ -1,5 +1,6 @@
 package com.trainee.controllers;
 
+import java.net.URI;
 import java.util.List;
 
 import javax.validation.Valid;
@@ -14,10 +15,12 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import com.trainee.exceptions.ControllerNotFoundException;
+import com.trainee.models.Parent;
 import com.trainee.models.Student;
 import com.trainee.services.IStudentService;
-import com.trainee.services.StudentService;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -46,6 +49,16 @@ public class StudentController {
   public List<Student> getAll() {
     return studentService.getAll();
   }
+  
+  @GetMapping(value="/students/{id}")
+  @ApiOperation("Get Student by id")
+  public Student getById(@PathVariable("id") int studentId) {
+	  Student student = studentService.findOne(studentId);
+	  if(student==null)
+		  throw new ControllerNotFoundException("Not found studentId -"+studentId);
+	  else
+	  return studentService.getById(studentId);
+  }
 
   /**
    * Método POST para guardar un objeto de la clase Student
@@ -55,8 +68,15 @@ public class StudentController {
    */
   @PostMapping(value = "/students")
   @ApiOperation("Create a new Student")
-  public void postStudent(@RequestBody @Valid Student student) {
-    studentService.post(student);
+  public ResponseEntity<Student> postStudent(@RequestBody @Valid Student student) {
+    
+    Student s = studentService.post(student);
+    
+    URI location = ServletUriComponentsBuilder
+    .fromCurrentRequest()
+     .path("/{id}")
+    .buildAndExpand(s.getId()).toUri();
+     return ResponseEntity.created(location).build();
   }
 
   /**
@@ -66,10 +86,10 @@ public class StudentController {
    *                actualizar
    * @return Manejo de HttpStatus(202 Si se actualizó ó 404 si algo falló)
    */
-  @PutMapping(value = "/students")
+  @PutMapping(value = "/students/{id}")
   @ApiOperation("Update a Student")
-  public void putStudent(@RequestBody @Valid Student student) {
-    studentService.putById(student);
+  public void putStudent(@PathVariable("id") int studentId,@RequestBody @Valid Student student) {
+    studentService.putById(studentId,student);
   }
 
   /**
@@ -80,6 +100,10 @@ public class StudentController {
   @DeleteMapping(value = "/students/{id}")
   @ApiOperation("Delete a Student")
   public void deleteStudent(@PathVariable("id") int studentId) {
-    studentService.deleteById(studentId);
+	  Student student = studentService.findOne(studentId);
+	  if(student==null)
+		  throw new ControllerNotFoundException("Not found studentId -"+studentId);
+	  else
+    studentService.delete(studentId);
   }
 }

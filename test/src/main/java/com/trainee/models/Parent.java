@@ -1,5 +1,6 @@
 package com.trainee.models;
 
+import java.util.List;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
@@ -26,11 +27,10 @@ import lombok.Data;
  * @author aescalan
  * @version 1.0
  */
-@Data
-@Entity
-@AllArgsConstructor
-@Table(name = "parents")
 
+@Entity
+@Table(name = "parents")
+@Data
 public class Parent {
 
   @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -58,17 +58,5 @@ public class Parent {
   @JoinTable(name = "student_parents", joinColumns = @JoinColumn(name = "parent_id", referencedColumnName = "parent_id"), inverseJoinColumns = @JoinColumn(name = "student_id", referencedColumnName = "student_id"))
   private Set<Student> student;
 
-  public Parent(int id, String gender, String firstName, String middleName, String lastName,
-      String otherParentDetails) {
-    this.id = id;
-    this.gender = gender;
-    this.firstName = firstName;
-    this.middleName = middleName;
-    this.lastName = lastName;
-    this.otherParentDetails = otherParentDetails;
-  }
-
-  public Parent() {
-  }
 
 }

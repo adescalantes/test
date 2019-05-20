@@ -31,10 +31,15 @@ public class ParentServiceImpl implements IParentService {
    * 
    * @return Todos los Parents
    */
-
+  @Override
   public List<Parent> getAll() {
     log.info("Getting All Parents");
-    return parentRepository.findAll();
+    return (List<Parent>) parentRepository.findAll();
+  }
+  
+  @Override
+  public Parent getById(int parentId) {
+	  return parentRepository.findById(parentId);
   }
 
   /**
@@ -44,15 +49,15 @@ public class ParentServiceImpl implements IParentService {
    *               condición
    * @return Manejo de HttpStatus según sea el caso
    */
-  public void post(Parent parent) {
-
-    if (parentRepository.findById(parent.getId()) == null) {
+  @Override
+  public Parent post(Parent parent) {
+	  if (parentRepository.findById(parent.getId()) == null) {
       log.info("A new Parent was created");
-      parentRepository.save(parent);
-    } else {
-      log.debug("Can't create a new Parent");
-    }
-
+      return parentRepository.save(parent);
+	  } else {
+	      log.debug("Can't create Parent");
+	      return parent;
+	    }
   }
 
   /**
@@ -62,9 +67,11 @@ public class ParentServiceImpl implements IParentService {
    *               condición
    * @return Manejo de HttpStatus según sea el caso
    */
-  public void putById(Parent parent) {
+  @Override
+  public void putById(int parentId,Parent parent) {
     if (parentRepository.findById(parent.getId()) != null) {
       log.info("Parent was updated");
+      parent.setId(parentId);
       parentRepository.save(parent);
     } else {
       log.debug("Can't update Parent");
@@ -78,15 +85,20 @@ public class ParentServiceImpl implements IParentService {
    * 
    * @param id Id de Parent
    */
-  public void deleteById(int parentId) {
-    Parent parent = parentRepository.findById(parentId);
+  @Override
+  public void delete(int parentId) {
     if (parentRepository.findById(parentId) != null) {
       log.info("Parent was deleted");
-      parentRepository.delete(parent);
+      parentRepository.deleteById(parentId);
 
     } else {
     	log.debug("Can't delete Parent");
     }
 
+  }
+  
+  @Override
+  public Parent findOne(int parentId) {
+	  return parentRepository.findById(parentId);
   }
 }

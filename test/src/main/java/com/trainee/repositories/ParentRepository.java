@@ -1,6 +1,7 @@
 package com.trainee.repositories;
 
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
 import com.trainee.models.Parent;
@@ -10,8 +11,8 @@ import com.trainee.models.Parent;
  *
  */
 @Repository
-public interface ParentRepository extends JpaRepository<Parent, Integer> {
+public interface ParentRepository extends CrudRepository<Parent, Integer> {
 
-  public Parent findById(int id);
+	public Parent findById(int parentId);
 
 }

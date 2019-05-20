@@ -1,5 +1,6 @@
 package com.trainee.controllers;
 
+import java.net.URI;
 import java.util.List;
 
 import javax.validation.Valid;
@@ -14,10 +15,13 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import com.trainee.exceptions.ControllerNotFoundException;
+import com.trainee.models.FamilyMember;
 import com.trainee.models.Parent;
+import com.trainee.models.Student;
 import com.trainee.services.IParentService;
-import com.trainee.services.ParentService;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -47,6 +51,15 @@ public class ParentController {
     return parentService.getAll();
   }
 
+  @GetMapping(value="/parents/{id}")
+  @ApiOperation("Get Parent by id")
+  public Parent getById(@PathVariable("id") int parentId) {
+	  Parent parent = parentService.findOne(parentId);
+	  if(parent==null)
+		  throw new ControllerNotFoundException("Not found id -"+parentId);
+	  else
+	  return parentService.getById(parentId);
+  }
   /**
    * Método POST para guardar un objeto de la clase Parent
    * 
@@ -55,8 +68,14 @@ public class ParentController {
    */
   @ApiOperation("Create a new Parent")
   @PostMapping(value = "/parents")
-  public void postParent(@RequestBody @Valid Parent parent) {
-    parentService.post(parent);
+  public ResponseEntity<Parent> postParent(@RequestBody @Valid Parent parent) {
+    Parent p = parentService.post(parent);
+    
+    URI location = ServletUriComponentsBuilder
+    .fromCurrentRequest()
+     .path("/{id}")
+    .buildAndExpand(p.getId()).toUri();
+     return ResponseEntity.created(location).build();
   }
 
   /**
@@ -66,9 +85,9 @@ public class ParentController {
    * @return Manejo de HttpStatus(202 Si se actualizó ó 404 si algo falló)
    */
   @ApiOperation("Update a Parent")
-  @PutMapping(value = "/parents")
-  public void putParent(@RequestBody @Valid Parent parent) {
-    parentService.putById(parent);
+  @PutMapping(value = "/parents/{id}")
+  public void putParent(@PathVariable("id") int parentId, @RequestBody @Valid Parent parent) {
+    parentService.putById(parentId,parent);
   }
 
   /**
@@ -79,6 +98,10 @@ public class ParentController {
   @ApiOperation("Delete a Parent")
   @DeleteMapping(value = "/parents/{id}")
   public void deleteParent(@PathVariable("id") int parentId) {
-    parentService.deleteById(parentId);
+	  Parent parent = parentService.findOne(parentId);
+	  if(parent==null)
+		  throw new ControllerNotFoundException("Not found id -"+parentId);
+	  else
+    parentService.delete(parentId);
   }
 }

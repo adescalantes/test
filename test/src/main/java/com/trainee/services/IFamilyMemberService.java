@@ -8,10 +8,13 @@ public interface IFamilyMemberService {
 	
 	public List<FamilyMember> getAll();
 	
-	public void post(FamilyMember familyMember);
+	public FamilyMember getById(int familyMemberId);
 	
-	public void putById(FamilyMember familyMember);
+	public FamilyMember post(FamilyMember familyMember);
 	
-	public void deleteById(int familyMemberId);
+	public void putById(int familyMemberId,FamilyMember familyMember);
 	
+	public void delete(int familyMemberId);
+	
+	public FamilyMember findOne(int familyMemberId);
 }

@@ -1,10 +1,12 @@
 package com.trainee.controllers;
 
+import java.net.URI;
 import java.util.List;
 
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.web.ProjectedPayload;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -14,12 +16,14 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import com.trainee.exceptions.ControllerNotFoundException;
 import com.trainee.models.Family;
 import com.trainee.models.FamilyMember;
-import com.trainee.services.FamilyService;
+import com.trainee.models.Parent;
+import com.trainee.models.projections.FamilyExcerpt;
 import com.trainee.services.IFamilyService;
-import com.trainee.services.implement.FamilyServiceImpl;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -48,6 +52,16 @@ public class FamilyController {
   public List<Family> getAll() {
     return familyService.getAll();
   }
+  
+  @GetMapping(value="/families/{id}")
+  @ApiOperation("Get Family by id")
+  public Family getById(@PathVariable("id") int familyId) {
+	  Family family = familyService.findOne(familyId);
+	  if(family==null)
+		  throw new ControllerNotFoundException("Not found id -"+familyId);
+	  else
+	  return familyService.getById(familyId);
+  }
 
   /**
    * Método GET para obtener todos los objetos de la clase FamilyMembers por un
@@ -58,7 +72,7 @@ public class FamilyController {
    */
   @ApiOperation("Return all Families by FamilyId")
   @GetMapping("/families/members/{id}")
-  public List<FamilyMember> getFamily(@PathVariable("id") int familyId) {
+  public List<FamilyExcerpt> getFamily(@PathVariable("id") int familyId) {
     return familyService.getFamilyMembers(familyId);
   }
 
@@ -70,8 +84,15 @@ public class FamilyController {
    */
   @ApiOperation("Create a new Family")
   @PostMapping("/families")
-  public void postFamily(@RequestBody @Valid Family family) {
-    familyService.post(family);
+  public ResponseEntity<Family> postFamily(@Valid @RequestBody Family family) {
+    Family f = familyService.post(family);
+    
+   URI location = ServletUriComponentsBuilder
+   .fromCurrentRequest()
+    .path("/{id}")
+   .buildAndExpand(f.getId()).toUri();
+    return ResponseEntity.created(location).build();
+    
   }
 
   /**
@@ -81,9 +102,9 @@ public class FamilyController {
    * @return Manejo de HttpStatus(202 Si se actualizó ó 404 si algo falló)
    */
   @ApiOperation("Update a Family")
-  @PutMapping("/families")
-  public void putFamily(@RequestBody @Valid Family family) {
-    familyService.putById(family);
+  @PutMapping("/families/{id}")
+  public void putFamily(@PathVariable("id") int familyId,@RequestBody @Valid Family family) {
+    familyService.putById(familyId,family);
   }
 
   /**
@@ -94,6 +115,10 @@ public class FamilyController {
   @ApiOperation("Delete a Family")
   @DeleteMapping(value = "/families/{id}")
   public void deleteFamily(@PathVariable("id") int familyId) {
-    familyService.deleteById(familyId);
+	  Family family = familyService.findOne(familyId);
+	  if(family==null)
+		  throw new ControllerNotFoundException("Not found id -"+familyId);
+	  else
+    familyService.delete(familyId);
   }
 }

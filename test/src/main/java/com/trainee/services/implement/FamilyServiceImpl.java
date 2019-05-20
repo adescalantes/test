@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 
 import com.trainee.models.Family;
 import com.trainee.models.FamilyMember;
+import com.trainee.models.projections.FamilyExcerpt;
 import com.trainee.repositories.FamilyMemberRepository;
 import com.trainee.repositories.FamilyRepository;
 import com.trainee.services.IFamilyService;
@@ -36,9 +37,15 @@ public class FamilyServiceImpl implements IFamilyService {
    * 
    * @return Todos los objetos de la clase FamilyMember
    */
+  @Override
   public List<Family> getAll() {
     log.info("Getting All Families");
-    return familyRepository.findAll();
+    return (List<Family>) familyRepository.findAll();
+  }
+  
+  @Override
+  public Family getById(int familyId) {
+	  return familyRepository.findById(familyId);
   }
 
   /**
@@ -48,9 +55,10 @@ public class FamilyServiceImpl implements IFamilyService {
    * @param id Recibir un familyId de la clase Family
    * @return Todos los objetos de la clase FamilyMember por familyId
    */
-  public List<FamilyMember> getFamilyMembers(int familyId) {
+  @Override
+  public List<FamilyExcerpt> getFamilyMembers(int familyId) {
     log.info("Getting all familyMembers by familyId");
-    return familyMemberRepository.findByFamilyId(familyId);
+    return familyMemberRepository.getFamilyMembers(familyId);
   }
 
   /**
@@ -60,14 +68,15 @@ public class FamilyServiceImpl implements IFamilyService {
    *               condición
    * @return Manejo de HttpStatus según sea el caso
    */
-  public void post(Family family) {
-    if (familyRepository.findById(family.getId()) == null) {
-      log.info("A new family was created");
-      familyRepository.save(family);
-    } else {
-      log.debug("Can't create a new family");
-    }
-
+  @Override
+  public Family post(Family family) {
+	  if (familyRepository.findById(family.getId()) == null) {
+	  log.info("A new family was created - {}", family.getId());
+      return familyRepository.save(family);
+	  } else {
+		  log.debug("Can't create family");
+		  return family;
+	    }
   }
 
   /**
@@ -77,12 +86,14 @@ public class FamilyServiceImpl implements IFamilyService {
    *               condición
    * @return Manejo de HttpStatus según sea el caso
    */
-  public void putById(Family family) {
+  @Override
+  public void putById(int familyId,Family family) {
     if (familyRepository.findById(family.getId()) != null) {
       log.info("Family was updated");
+      family.setId(familyId);
       familyRepository.save(family);
     } else {
-      log.debug("Can't update that family");
+      log.debug("Can't update family");
     }
 
   }
@@ -92,14 +103,18 @@ public class FamilyServiceImpl implements IFamilyService {
    * 
    * @param id Id de Family
    */
-  public void deleteById(int familyId) {
-    Family family = familyRepository.findById(familyId);
+  @Override
+  public void delete(int familyId) {
     if (familyRepository.findById(familyId) != null) {
       log.info("A family was deleted");
-      familyRepository.delete(family);
+      familyRepository.deleteById(familyId);
     } else {
       log.info("Can't delete Family");
     }
-
+  }
+  
+  @Override
+  public Family findOne(int familyId) {
+	  return familyRepository.findById(familyId);
   }
 }

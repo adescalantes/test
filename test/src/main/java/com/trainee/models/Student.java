@@ -1,6 +1,7 @@
 package com.trainee.models;
 
 import java.sql.Date;
+
 import java.util.Set;
 
 import javax.persistence.Column;
@@ -13,7 +14,10 @@ import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
+
 /**
  * Clase Entity de Student
  * <p>
@@ -24,9 +28,11 @@ import lombok.Data;
 @Entity
 @Table(name = "students")
 @Data
+@NoArgsConstructor
 public class Student {
 
-  @GeneratedValue(strategy = GenerationType.IDENTITY)
+
+@GeneratedValue(strategy = GenerationType.IDENTITY)
   @Id
   @Column(name = "student_id")
   private int id;
@@ -46,6 +52,7 @@ public class Student {
   @Column(name = "date_of_birth")
   private Date dateOfBirth;
 
+
   @Column(name = "other_student_details")
   private String otherStudentDetails;
 
@@ -53,5 +60,15 @@ public class Student {
   @ManyToMany(mappedBy = "student")
   private Set<Parent> parent;
 
+  public Student(int id, String gender, String firstName, String middleName, String lastName, Date dateOfBirth,
+		String otherStudentDetails) {
+	this.id = id;
+	this.gender = gender;
+	this.firstName = firstName;
+	this.middleName = middleName;
+	this.lastName = lastName;
+	this.dateOfBirth = dateOfBirth;
+	this.otherStudentDetails = otherStudentDetails;
+}
 
 }

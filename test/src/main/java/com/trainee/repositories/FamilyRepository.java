@@ -1,6 +1,9 @@
 package com.trainee.repositories;
 
-import org.springframework.data.jpa.repository.JpaRepository;
+import java.util.List;
+
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
 import com.trainee.models.Family;
@@ -9,9 +12,11 @@ import com.trainee.models.Family;
  * @author Alexander
  *
  */
-@Repository
-public interface FamilyRepository extends JpaRepository<Family, Integer> {
+import com.trainee.models.FamilyMember;
 
-  public Family findById(int id);
+@Repository
+public interface FamilyRepository extends CrudRepository<Family, Integer> {
+	
+	public Family findById(int familyId);
 
 }

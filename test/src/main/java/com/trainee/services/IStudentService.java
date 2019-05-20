@@ -8,10 +8,14 @@ public interface IStudentService {
 	
 	public List<Student> getAll();
 	
-	public void post(Student student);
+	public Student getById(int studentId);
 	
-	public void putById(Student student);
+	public Student post(Student student);
 	
-	public void deleteById(int studentId);
+	public void putById(int studentId,Student student);
+	
+	public void delete(int studentId);
+	
+	public Student findOne(int studentId);
 	
 }

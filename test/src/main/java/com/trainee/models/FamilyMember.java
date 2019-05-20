@@ -7,10 +7,15 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.NamedQuery;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.rest.core.config.Projection;
+
+import lombok.AllArgsConstructor;
 import lombok.Data;
 
 /**
@@ -24,7 +29,6 @@ import lombok.Data;
 @Entity
 @Table(name = "family_members")
 @Data
-
 public class FamilyMember {
 
   @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -47,5 +51,7 @@ public class FamilyMember {
   @OneToOne
   @JoinColumn(name = "student_id", referencedColumnName = "student_id")
   private Student student;
+  
+  
 
 }

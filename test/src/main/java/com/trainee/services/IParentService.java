@@ -8,9 +8,13 @@ public interface IParentService {
 
 	public List<Parent> getAll();
 	
-	public void post(Parent parent);
+	public Parent getById(int parentId);
 	
-	public void putById(Parent parent);
+	public Parent post(Parent parent);
 	
-	public void deleteById(int parentId);
+	public void putById(int parentId,Parent parent);
+	
+	public void delete(int parentId);
+	
+	public Parent findOne(int parentId);
 }

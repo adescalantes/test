@@ -32,11 +32,16 @@ public class FamilyMemberServiceImpl implements IFamilyMemberService {
    * 
    * @return Todos los objetos de la clase FamilyMember
    */
+  @Override
   public List<FamilyMember> getAll() {
     log.info("Getting All FamilyMembers");
-    return familyMemberRepository.findAll();
+    return (List<FamilyMember>) familyMemberRepository.findAll();
   }
 
+  @Override
+  public FamilyMember getById(int familyMemberId) {
+	  return familyMemberRepository.findById(familyMemberId);
+  }
   /**
    * Método para crear un objeto de la clase FamilyMember
    * 
@@ -44,14 +49,15 @@ public class FamilyMemberServiceImpl implements IFamilyMemberService {
    *                     la condición
    * @return Manejo de HttpStatus según sea el caso
    */
-  public void post(FamilyMember familyMember) {
-    if (familyMemberRepository.findById(familyMember.getId()) == null) {
+  @Override
+  public FamilyMember post(FamilyMember familyMember) {
+	  if (familyMemberRepository.findById(familyMember.getId()) == null) {
       log.info("A new FamilyMember was created");
-      familyMemberRepository.save(familyMember);
-    } else {
-      log.debug("Can't create a new FamilyMember");
-    }
-
+      return familyMemberRepository.save(familyMember);
+	  } else {
+	      log.debug("Can't create FamilyMember");
+	      return familyMember;
+	    }
   }
 
   /**
@@ -61,9 +67,11 @@ public class FamilyMemberServiceImpl implements IFamilyMemberService {
    *                     cumple la condición
    * @return Manejo de HttpStatus según sea el caso
    */
-  public void putById(FamilyMember familyMember) {
+  @Override
+  public void putById(int familyMemberId,FamilyMember familyMember) {
     if (familyMemberRepository.findById(familyMember.getId()) != null) {
       log.info("FamilyMember was updated");
+      familyMember.setId(familyMemberId);
       familyMemberRepository.save(familyMember);
     } else {
       log.debug("Can't update FamilyMember");
@@ -76,13 +84,18 @@ public class FamilyMemberServiceImpl implements IFamilyMemberService {
    * 
    * @param id Id de FamilyMember
    */
-  public void deleteById(int familyMemberId) {   
-    FamilyMember familyMember = familyMemberRepository.findById(familyMemberId);
+  @Override
+  public void delete(int familyMemberId) {   
     if (familyMemberRepository.findById(familyMemberId) != null) {
     	log.info("FamilyMember was deleted");
-      familyMemberRepository.delete(familyMember);
+      familyMemberRepository.deleteById(familyMemberId);
     } else {
     	log.info("Can't delete FamilyMember");
     }
+  }
+  
+  @Override
+  public FamilyMember findOne(int familyMemberId) {
+	  return familyMemberRepository.findById(familyMemberId);
   }
 }

@@ -1,5 +1,6 @@
 package com.trainee.controllers;
 
+import java.net.URI;
 import java.util.List;
 
 import javax.validation.Valid;
@@ -14,8 +15,12 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import com.trainee.exceptions.ControllerNotFoundException;
+import com.trainee.models.Family;
 import com.trainee.models.FamilyMember;
+import com.trainee.models.Parent;
 import com.trainee.services.IFamilyMemberService;
 
 import io.swagger.annotations.Api;
@@ -45,6 +50,16 @@ public class FamilyMemberController {
   public List<FamilyMember> getAll() {
     return familyMemberService.getAll();
   }
+  
+  @GetMapping(value="/familyMembers/{id}")
+  @ApiOperation("Get FamilyMember by id")
+  public FamilyMember getById(@PathVariable("id") int familyMemberId) {
+	  FamilyMember familyMember = familyMemberService.findOne(familyMemberId);
+	  if(familyMember==null)
+		  throw new ControllerNotFoundException("Not found id -"+familyMemberId);
+	  else
+	  return familyMemberService.getById(familyMemberId);
+  }
 
   /**
    * Método POST para guardar un objeto de la clase FamilyMember
@@ -55,8 +70,15 @@ public class FamilyMemberController {
    */
   @ApiOperation("Create a new FamilyMember")
   @PostMapping("/familyMembers")
-  public void postFamilyMember(@RequestBody @Valid FamilyMember familyMember) {
-    familyMemberService.post(familyMember);
+  public ResponseEntity<FamilyMember> postFamilyMember(@RequestBody @Valid FamilyMember familyMember) {
+    FamilyMember fm = familyMemberService.post(familyMember);
+    
+    URI location = ServletUriComponentsBuilder
+    .fromCurrentRequest()
+     .path("/{id}")
+    .buildAndExpand(fm.getId()).toUri();
+     return ResponseEntity.created(location).build();
+     
   }
 
   /**
@@ -67,9 +89,9 @@ public class FamilyMemberController {
    * @return Manejo de HttpStatus(202 Si se actualizó ó 404 si algo falló)
    */
   @ApiOperation("Update a FamilyMember")
-  @PutMapping("/familyMembers")
-  public void putFamilyMember(@RequestBody @Valid FamilyMember familyMember) {
-    familyMemberService.putById(familyMember);
+  @PutMapping("/familyMembers/{id}")
+  public void putFamilyMember(@PathVariable("id") int familyMemberId,@RequestBody @Valid FamilyMember familyMember) {
+    familyMemberService.putById(familyMemberId,familyMember);
   }
 
   /**
@@ -79,8 +101,12 @@ public class FamilyMemberController {
    */
   @ApiOperation("Delete a FamilyMember")
   @DeleteMapping(value = "/familyMembers/{id}")
-  public void deleteParents(@PathVariable("id") int id) {
-    familyMemberService.deleteById(id);
+  public void deleteParents(@PathVariable("id") int familyMemberId) {
+	  FamilyMember familyMember = familyMemberService.findOne(familyMemberId);
+	  if(familyMember==null)
+		  throw new ControllerNotFoundException("Not found id -"+familyMemberId);
+	  else
+    familyMemberService.delete(familyMemberId);
   }
 
 }
